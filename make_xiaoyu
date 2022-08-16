@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd mt7261
+cd mt7621
 
 make clean
 sleep 3
