@@ -1,0 +1,14 @@
+#!/bin/bash
+
+cd mt7260
+
+make clean
+sleep 3
+
+#make image PROFILE=newifi-mini PACKAGES="-luci-i18n-update-zh-cn -luci-app-update " FILES="Y1_files/"
+
+make image PROFILE=newifi-mini FILES="Y1_Config_files/"
+
+cd ..
+
+

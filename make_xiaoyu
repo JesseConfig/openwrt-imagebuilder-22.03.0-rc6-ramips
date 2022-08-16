@@ -1,0 +1,14 @@
+#!/bin/bash
+
+cd mt7261
+
+make clean
+sleep 3
+
+#make image PROFILE=newifi-mini PACKAGES="-luci-i18n-update-zh-cn -luci-app-update " FILES="Y1_files/"
+
+make image PROFILE=xiaoyu_xy-c5 FILES="xiaoyu_Config_files/"
+
+cd ..
+
+
