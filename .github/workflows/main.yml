@@ -1,0 +1,40 @@
+name: make_image
+on:
+  push:
+    branches: 
+      #将工作流设置为在将事件推送到master和release/*分支时运行
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: main
+
+      - name: Initialization environment
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        run: |
+          docker rmi `docker images -q`
+      - name: make_image
+        run: |
+          pwd
+          chmod +x make*
+          ./make_xiaoyu
+          ./make_y1
+          echo "Builder OK"
+      - name: Assemble Builder_bin
+        run: |
+          TM=`date +%Y-%m-%d-%H`
+          echo $TM
+          rm -rf ./Builder_bin/
+          mkdir -p ./Builder_bin/
+          find ./ -name "*sysupgrade*bin*" | xargs -i mv -f {} ./Builder_bin/
+
+      - name: Upload Builder_bin
+        uses: actions/upload-artifact@v2
+        with:
+          name: openwrt-imagebuilder-22.03.0-rc6_firmware
+          path: ./Builder_bin/
