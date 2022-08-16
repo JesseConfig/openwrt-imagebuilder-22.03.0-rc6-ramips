@@ -2,20 +2,22 @@ name: make_image
 on:
   push:
     branches: 
-      #将工作流设置为在将事件推送到main和main/*分支时运行
-     - main
+      #将工作流设置为在将事件推送到master和release/*分支时运行
+      - main
+
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
         with:
-          ref: main	  
+          ref: main
+
       - name: Initialization environment
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
-          docker rmi `docker images -q`  
+          docker rmi `docker images -q`
       - name: make_image
         run: |
           pwd
@@ -30,6 +32,7 @@ jobs:
           rm -rf ./Builder_bin/
           mkdir -p ./Builder_bin/
           find ./ -name "*sysupgrade*bin*" | xargs -i mv -f {} ./Builder_bin/
+
       - name: Upload Builder_bin
         uses: actions/upload-artifact@v2
         with:
