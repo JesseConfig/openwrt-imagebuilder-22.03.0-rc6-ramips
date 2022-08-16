@@ -21,9 +21,8 @@ jobs:
       - name: make_image
         run: |
           pwd
-          chmod +x make*
-          ./make_xiaoyu
-          ./make_y1
+          chmod +x ./run
+          ./run
           echo "Builder OK"
       - name: Assemble Builder_bin
         run: |
